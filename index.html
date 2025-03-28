@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vetores (Array) | Atividade</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: rgb(28, 25, 25, 1);
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+        }
+
+        header {
+            padding: 24px;
+            color:rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: fit-content;
+            width: 400px;
+        }
+        
+        form {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: space-between;
+        }
+
+        #color-input {
+            cursor: pointer;
+        }
+
+        .result {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        pre {
+            font-size: 16px;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .box {
+            width: 500px;
+            height: 500px;
+            border-radius: 100%;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(-25%);
+                animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+            }
+            50% {
+                transform: none;
+                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Vetores (Arrays)</h1>
+        <div class="result">
+            <span>Valor atual (RGB):</span>
+            <pre class="value"></pre>
+        </div>
+        <form>
+            <span>Entrada:</span>
+            <input type="color" id="color-input">
+        </form>
+    </header>
+    <div class="container">
+        <div class="box"></div>
+    </div>
+    <script>
+        const boxElement = document.querySelector(".box");
+        const inputElement = document.querySelector("#color-input");
+        const valueElement = document.querySelector(".value");
+
+        boxElement.style.backgroundColor = inputElement.value;
+        boxElement.style.boxShadow = "box-shadow: rgb(0, 0, 0) 0px 0px 32px;"
+        valueElement.textContent = "[0, 0, 0]";
+
+        inputElement.addEventListener("input", (event) => {
+            const color = event.target.value;
+
+            const [r, g, b] = hexToArray(color);
+
+            const rgb = `[${r}, ${g}, ${b}]`;
+
+            valueElement.textContent = rgb;
+            boxElement.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            boxElement.style.boxShadow = `rgb(${r}, ${g}, ${b}) 0px 0px 32px`
+        });
+
+        function hexToArray(hex) {
+            hex = hex.replace("#", "");
+
+            const r = parseInt(hex.slice(0, 2), 16);
+            const g = parseInt(hex.slice(2, 4), 16);
+            const b = parseInt(hex.slice(4, 6), 16);
+
+            return [r, g, b];
+        }
+    </script>
+</body>
+</html>
